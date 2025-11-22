@@ -78,7 +78,7 @@ setup(
     install_requires=get_requirements("requirements.txt"),
     keywords='ovos skill plugin',
     entry_points={
-        'opm.solver.question': SOLVER_ENTRY_POINT,
+        'opm.agents.retrieval': SOLVER_ENTRY_POINT,
         "opm.plugin.persona": PERSONA_ENTRY_POINT
     }
 )
