@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.4a6](https://github.com/OpenVoiceOS/ovos-wikipedia-solver/tree/0.1.4a6) (2025-12-19)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-wikipedia-solver/compare/0.1.4a5...0.1.4a6)
+
+**Merged pull requests:**
+
+- Update dependency python to 3.14 [\#15](https://github.com/OpenVoiceOS/ovos-wikipedia-solver/pull/15) ([renovate[bot]](https://github.com/apps/renovate))
+
 ## [0.1.4a5](https://github.com/OpenVoiceOS/ovos-wikipedia-solver/tree/0.1.4a5) (2025-12-19)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-wikipedia-solver/compare/0.1.4a4...0.1.4a5)
