@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.4a5](https://github.com/OpenVoiceOS/ovos-wikipedia-solver/tree/0.1.4a5) (2025-12-19)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-wikipedia-solver/compare/0.1.4a4...0.1.4a5)
+
+**Merged pull requests:**
+
+- Update pilosus/action-pip-license-checker action to v3 [\#25](https://github.com/OpenVoiceOS/ovos-wikipedia-solver/pull/25) ([renovate[bot]](https://github.com/apps/renovate))
+
 ## [0.1.4a4](https://github.com/OpenVoiceOS/ovos-wikipedia-solver/tree/0.1.4a4) (2025-12-19)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-wikipedia-solver/compare/0.1.4a3...0.1.4a4)
