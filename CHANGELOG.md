@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.4a3](https://github.com/OpenVoiceOS/ovos-wikipedia-solver/tree/0.1.4a3) (2025-12-19)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-wikipedia-solver/compare/0.1.4a2...0.1.4a3)
+
+**Merged pull requests:**
+
+- Update actions/checkout action to v6 [\#20](https://github.com/OpenVoiceOS/ovos-wikipedia-solver/pull/20) ([renovate[bot]](https://github.com/apps/renovate))
+
 ## [0.1.4a2](https://github.com/OpenVoiceOS/ovos-wikipedia-solver/tree/0.1.4a2) (2025-12-18)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-wikipedia-solver/compare/0.1.4a1...0.1.4a2)
