@@ -1,5 +1,0 @@
-ovos-utils>=0.7.0,<1.0.0
-ovos-plugin-manager>=2.1.0,<3.0.0
-ovos-bus-client>=1.0.1
-ovos-solver-bm25-plugin>=0.0.1,<1.0.0
-RAKEkeywords
