@@ -191,7 +191,7 @@ class TestGetPageData(unittest.TestCase):
         mock_get.return_value.json.return_value = self._make_response(
             "42", "Python (programming language)", "Python is a high-level language."
         )
-        WikipediaRetrievalEngine._get_page_data.cache_clear()
+
         result = WikipediaRetrievalEngine._get_page_data("42", "en", "python", 0)
         self.assertIsInstance(result, WikipediaResult)
         self.assertEqual(result.title, "Python (programming language)")
@@ -203,7 +203,7 @@ class TestGetPageData(unittest.TestCase):
         mock_get.return_value.json.return_value = self._make_response(
             "99", "Mercury", "Mercury may refer to: the planet, the element, the god."
         )
-        WikipediaRetrievalEngine._get_page_data.cache_clear()
+
         result = WikipediaRetrievalEngine._get_page_data("99", "en", "mercury", 0)
         self.assertIsNone(result)
 
@@ -213,7 +213,7 @@ class TestGetPageData(unittest.TestCase):
         mock_get.return_value.json.return_value = self._make_response(
             "7", "Eiffel Tower", "The Eiffel Tower is in Paris.", thumbnail=thumbnail
         )
-        WikipediaRetrievalEngine._get_page_data.cache_clear()
+
         result = WikipediaRetrievalEngine._get_page_data("7", "en", "eiffel tower", 0)
         self.assertIsNotNone(result.image)
         self.assertNotIn("thumb", result.image)
@@ -221,7 +221,7 @@ class TestGetPageData(unittest.TestCase):
 
     @patch("ovos_wikipedia.requests.get", side_effect=Exception("network error"))
     def test_network_error_returns_none(self, mock_get):
-        WikipediaRetrievalEngine._get_page_data.cache_clear()
+
         result = WikipediaRetrievalEngine._get_page_data("1", "en", "q", 0)
         self.assertIsNone(result)
 
@@ -251,7 +251,7 @@ class TestSearch(unittest.TestCase):
 
     def setUp(self):
         self.s = _make_engine()
-        WikipediaRetrievalEngine._get_page_data.cache_clear()
+
 
     def _patch_requests(self, search_data, page_data_map):
         def side_effect(url, **kwargs):
