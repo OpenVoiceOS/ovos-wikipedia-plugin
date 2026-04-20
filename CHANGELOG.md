@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.0a1](https://github.com/OpenVoiceOS/ovos-wikipedia-solver/tree/1.0.0a1) (2026-04-20)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-wikipedia-solver/compare/0.1.4a6...1.0.0a1)
+
+**Breaking changes:**
+
+- feat!: rename package to ovos\_wikipedia, add WikipediaToolbox OPM tool plugin [\#29](https://github.com/OpenVoiceOS/ovos-wikipedia-solver/pull/29) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [0.1.4a6](https://github.com/OpenVoiceOS/ovos-wikipedia-solver/tree/0.1.4a6) (2025-12-19)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-wikipedia-solver/compare/0.1.4a5...0.1.4a6)
