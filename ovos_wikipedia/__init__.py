@@ -13,6 +13,7 @@ import concurrent.futures
 import dataclasses
 from functools import lru_cache
 from typing import Optional, Tuple, Dict, Any, List, Type
+from urllib.parse import urlencode
 
 import requests
 from ovos_plugin_manager.agents import (
@@ -167,10 +168,13 @@ class WikipediaRetrievalEngine(RetrievalEngine):
         """
         LOG.debug(f"WikiSolver query: {query}")
         lang = (lang or self.lang).split("-")[0]
-        search_url = (
-            f"https://{lang}.wikipedia.org/w/api.php?action=query&list=search&"
-            f"srsearch={query}&format=json"
-        )
+        search_params = urlencode({
+            "action": "query",
+            "list": "search",
+            "srsearch": query,
+            "format": "json",
+        })
+        search_url = f"https://{lang}.wikipedia.org/w/api.php?{search_params}"
         try:
             search_results: List[Dict[str, Any]] = requests.get(
                 search_url,
@@ -220,7 +224,6 @@ class WikipediaRetrievalEngine(RetrievalEngine):
         return self._rerank_pages(query, res, lang)
 
     @classmethod
-    @lru_cache(maxsize=128)
     def _get_page_data(cls, pid: str, lang: str, query: Optional[str] = None, idx: int = 0) -> Optional[
         WikipediaResult]:
         """
@@ -340,13 +343,13 @@ class WikipediaToolbox(ToolBox):
 
     def search_wikipedia(self, args: SearchWikipediaArgs) -> SearchWikipediaOutput:
         """
-        Return the current system date and time.
+        Search Wikipedia for articles matching the given query.
 
         Args:
-            args: Validated ``GetCurrentDatetimeArgs`` (no fields).
+            args: Validated ``SearchWikipediaArgs`` with ``query`` and ``lang`` fields.
 
         Returns:
-            ``GetCurrentDatetimeOutput`` with ISO string, date, time, and timezone.
+            ``SearchWikipediaOutput`` with a list of (title, summary) pairs.
         """
         return SearchWikipediaOutput(
             results=[(res.title, res.summary)
@@ -376,14 +379,6 @@ class WikipediaToolbox(ToolBox):
             )
         ]
 
-
-WIKIPEDIA_PERSONA: Dict[str, Any] = {
-    "name": "Wikipedia",
-    "solvers": [
-        "ovos-solver-plugin-wikipedia",
-        "ovos-solver-failure-plugin"
-    ]
-}
 
 if __name__ == "__main__":
     LOG.set_level("ERROR")
