@@ -21,7 +21,7 @@ pip install ovos-wikipedia-plugin
 
 | Entry point                                      | Class                      | Use case                                                 |
 |--------------------------------------------------|----------------------------|----------------------------------------------------------|
-| `opm.agents.retrieval` — `ovos-wikipedia-plugin` | `WikipediaRetrievalEngine` | RAG retrieval — returns ranked `(passage, score)` tuples |
+| `opm.agents.retrieval` — `ovos-wikipedia-plugin` | `WikipediaRetrievalEngine` | Retrieval — returns ranked `(passage, score)` tuples     |
 | `opm.agents.toolbox` — `ovos-wikipedia-tool`     | `WikipediaToolbox`         | Agent tool use — exposes `search_wikipedia`              |
 
 ---
@@ -68,7 +68,7 @@ engine = WikipediaRetrievalEngine(config={
 ## Agent Toolbox
 
 `WikipediaToolbox` exposes a single `search_wikipedia` tool that any OPM-compatible agent loop (
-e.g. [ovos-agentic-loop](https://github.com/OpenVoiceOS/ovos-agentic-loop)) can discover and call.
+e.g. [ovos-agentic-loop](https://github.com/TigreGotico/ovos-agentic-loop)) can discover and call.
 
 ### Loading via entry point (recommended)
 
