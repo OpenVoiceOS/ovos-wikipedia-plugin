@@ -18,11 +18,22 @@ dependencies = [
     "requests"
 ]
 
+[project.optional-dependencies]
+test = [
+    "pytest",
+    "ovoscope",
+    "ovos-persona",
+    "ovos-persona-pipeline-plugin",
+]
+
 [project.entry-points."opm.agents.retrieval"]
 ovos-wikipedia-plugin = "ovos_wikipedia:WikipediaRetrievalEngine"
 
 [project.entry-points."opm.agents.toolbox"]
 ovos-wikipedia-tool = "ovos_wikipedia:WikipediaToolbox"
+
+[tool.pytest.ini_options]
+timeout = 600
 
 [tool.setuptools.dynamic]
 version = {attr = "ovos_wikipedia.version.__version__"}
