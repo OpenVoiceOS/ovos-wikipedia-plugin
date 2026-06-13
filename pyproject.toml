@@ -23,7 +23,6 @@ test = [
     "pytest",
     "ovoscope",
     "ovos-persona",
-    "ovos-persona-pipeline-plugin",
 ]
 
 [project.entry-points."opm.agents.retrieval"]
