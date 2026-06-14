@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=42", "wheel"]
+requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -22,7 +22,7 @@ dependencies = [
 test = [
     "pytest",
     "ovoscope",
-    "ovos-persona",
+    "ovos-persona @ git+https://github.com/OpenVoiceOS/ovos-persona@dev",
 ]
 
 [project.entry-points."opm.agents.retrieval"]
