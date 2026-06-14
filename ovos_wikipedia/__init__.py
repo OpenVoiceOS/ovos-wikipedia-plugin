@@ -82,7 +82,7 @@ class WikipediaRetrievalEngine(RetrievalEngine):
         LOG.debug(f"Reranker: {self._reranker}")
         LOG.debug(f"ExtractiveQA: {self._extractive_qa}")
 
-    def query(self, query: str, lang: Optional[str] = None, k: int = 3) -> List[Tuple[str, float]]:
+    def query(self, query: str, lang: Optional[str] = None, k: int = 1, units: Optional[str] = None) -> List[Tuple[str, float]]:
         """
         Searches the knowledge base for relevant documents or data.
 
@@ -90,6 +90,7 @@ class WikipediaRetrievalEngine(RetrievalEngine):
             query: The search string.
             lang: BCP-47 language code.
             k: The maximum number of results to return.
+            units: Unused; accepted for interface compatibility.
 
         Returns:
             List of tuples containing (content, score) for the top k matches.

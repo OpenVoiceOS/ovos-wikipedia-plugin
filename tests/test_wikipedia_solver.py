@@ -400,6 +400,17 @@ class TestQuery(unittest.TestCase):
             self.s.query("q", "en", k=5)
         mock_search.assert_called_once_with("q", "en", 5)
 
+    def test_default_k_is_one(self):
+        with patch.object(self.s, "search", return_value=[]) as mock_search:
+            self.s.query("q", "en")
+        mock_search.assert_called_once_with("q", "en", 1)
+
+    def test_units_accepted_and_ignored(self):
+        fake_pages = [_fake_result(summary="Summary.", conf=0.8)]
+        with patch.object(self.s, "search", return_value=fake_pages):
+            results = self.s.query("q", "en", k=1, units="metric")
+        self.assertEqual(len(results), 1)
+
 
 # ---------------------------------------------------------------------------
 # WikipediaToolbox
