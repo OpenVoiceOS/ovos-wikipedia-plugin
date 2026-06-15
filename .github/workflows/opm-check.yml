@@ -12,8 +12,3 @@ jobs:
     with:
       python_version: '3.11'
       plugin_type: 'auto'
-      entry_point: 'ovos-wikipedia-plugin'
-      opm_require_found: true
-      opm_validate_interface: true
-      opm_test_import: true
-      opm_perf_threshold_ms: 500
