@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=42", "wheel"]
+requires = ["setuptools>=77", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -7,15 +7,26 @@ name = "ovos-wikipedia-plugin"
 dynamic = ["version"]
 description = "OVOS Wikipedia plugin"
 readme = "README.md"
-license = { text = "Apache-2.0" }
+license = "Apache-2.0"
 requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+]
 dependencies = [
     "ovos-utils>=0.7.0,<1.0.0",
-    "ovos-plugin-manager>=2.3.0a1,<3.0.0",
+    "ovos-plugin-manager>=2.6.1a1,<3.0.0",
     "ovos-bus-client>=1.0.1",
     "rapidfuzz",
     "pydantic",
     "requests"
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest",
+    "pytest-timeout",
+    "ovoscope",
+    "ovos-persona>=0.9.0a3",
 ]
 
 [project.entry-points."opm.agents.retrieval"]
@@ -23,6 +34,9 @@ ovos-wikipedia-plugin = "ovos_wikipedia:WikipediaRetrievalEngine"
 
 [project.entry-points."opm.agents.toolbox"]
 ovos-wikipedia-tool = "ovos_wikipedia:WikipediaToolbox"
+
+[tool.pytest.ini_options]
+timeout = 600
 
 [tool.setuptools.dynamic]
 version = {attr = "ovos_wikipedia.version.__version__"}
