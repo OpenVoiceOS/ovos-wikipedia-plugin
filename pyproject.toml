@@ -27,6 +27,7 @@ test = [
     "pytest-timeout",
     "ovoscope",
     "ovos-persona>=0.9.0a3",
+    "ovos-spec-tools>=1.0.0a1",
 ]
 
 [project.entry-points."opm.agents.retrieval"]
