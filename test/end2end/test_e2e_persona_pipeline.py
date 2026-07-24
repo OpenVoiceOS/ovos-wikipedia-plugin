@@ -36,6 +36,9 @@ import ovos_persona
 
 from ovos_bus_client.message import Message
 from ovos_bus_client.session import Session, SessionManager
+from ovos_spec_tools import SpecMessage
+
+SPEC_SPEAK = SpecMessage.SPEAK.value
 from ovoscope import (
     PERSONA_PIPELINE,
     CaptureSession,
@@ -164,7 +167,7 @@ class TestWikipediaPersonaPipelineSpeak:
         messages = _drive_utterance(mc, sess, "what is wikipedia", timeout=30)
 
         msg_types = [m.msg_type for m in messages]
-        speak_msgs = [m for m in messages if m.msg_type == "speak"]
+        speak_msgs = [m for m in messages if m.msg_type == SPEC_SPEAK]
 
         assert speak_msgs, (
             f"Expected at least one 'speak' message; got msg_types: {msg_types}"
@@ -177,7 +180,7 @@ class TestWikipediaPersonaPipelineSpeak:
 
         messages = _drive_utterance(mc, sess, "tell me about encyclopedias", timeout=30)
 
-        speak_msgs = [m for m in messages if m.msg_type == "speak"]
+        speak_msgs = [m for m in messages if m.msg_type == SPEC_SPEAK]
         assert speak_msgs, (
             f"No speak message found. Message types: {[m.msg_type for m in messages]}"
         )
