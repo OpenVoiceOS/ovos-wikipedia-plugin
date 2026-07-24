@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.1a1](https://github.com/OpenVoiceOS/ovos-wikipedia-plugin/tree/1.0.1a1) (2026-07-24)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-wikipedia-plugin/compare/1.0.0a2...1.0.1a1)
+
+**Merged pull requests:**
+
+- fix: e2e persona pipeline test checks spec speak topic, not legacy alias [\#34](https://github.com/OpenVoiceOS/ovos-wikipedia-plugin/pull/34) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [1.0.0a2](https://github.com/OpenVoiceOS/ovos-wikipedia-plugin/tree/1.0.0a2) (2026-06-15)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-wikipedia-plugin/compare/1.0.0a1...1.0.0a2)
