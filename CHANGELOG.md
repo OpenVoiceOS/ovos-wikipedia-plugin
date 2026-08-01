@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.1a2](https://github.com/OpenVoiceOS/ovos-wikipedia-plugin/tree/1.0.1a2) (2026-08-01)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-wikipedia-plugin/compare/1.0.1a1...1.0.1a2)
+
+**Merged pull requests:**
+
+- docs: rewrite README in Simplified Technical English [\#36](https://github.com/OpenVoiceOS/ovos-wikipedia-plugin/pull/36) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [1.0.1a1](https://github.com/OpenVoiceOS/ovos-wikipedia-plugin/tree/1.0.1a1) (2026-07-24)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-wikipedia-plugin/compare/1.0.0a2...1.0.1a1)
