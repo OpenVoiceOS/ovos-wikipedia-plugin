@@ -4,8 +4,8 @@
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue)](LICENSE)
 [![Python](https://img.shields.io/badge/python-%3E%3D3.10-blue)](https://www.python.org/)
 
-Wikipedia integration for [OpenVoiceOS](https://openvoiceos.org). Provides a **retrieval engine** for RAG pipelines and
-an **agent toolbox** for tool-using agents, both as standard OPM plugins.
+This plugin connects [OpenVoiceOS](https://openvoiceos.org) to Wikipedia. It provides a retrieval engine for RAG
+pipelines and an agent toolbox for tool-using agents. Both ship as standard OPM plugins.
 
 ---
 
@@ -21,15 +21,15 @@ pip install ovos-wikipedia-plugin
 
 | Entry point                                      | Class                      | Use case                                                 |
 |--------------------------------------------------|----------------------------|----------------------------------------------------------|
-| `opm.agents.retrieval` — `ovos-wikipedia-plugin` | `WikipediaRetrievalEngine` | Retrieval — returns ranked `(passage, score)` tuples     |
-| `opm.agents.toolbox` — `ovos-wikipedia-tool`     | `WikipediaToolbox`         | Agent tool use — exposes `search_wikipedia`              |
+| `opm.agents.retrieval` (`ovos-wikipedia-plugin`) | `WikipediaRetrievalEngine` | Retrieval. Returns ranked `(passage, score)` tuples       |
+| `opm.agents.toolbox` (`ovos-wikipedia-tool`)     | `WikipediaToolbox`         | Agent tool use. Exposes `search_wikipedia`                |
 
 ---
 
 ## Retrieval Engine
 
 `WikipediaRetrievalEngine` implements the `RetrievalEngine` OPM interface. It searches Wikipedia, fetches article
-summaries in parallel, scores them for relevance, and optionally applies extractive QA and reranking sub-plugins.
+summaries in parallel, and scores them for relevance. It can also apply extractive QA and reranking sub-plugins.
 
 ```python
 from ovos_wikipedia import WikipediaRetrievalEngine
@@ -67,8 +67,8 @@ engine = WikipediaRetrievalEngine(config={
 
 ## Agent Toolbox
 
-`WikipediaToolbox` exposes a single `search_wikipedia` tool that any OPM-compatible agent loop (
-e.g. [ovos-agentic-loop](https://github.com/TigreGotico/ovos-agentic-loop)) can discover and call.
+`WikipediaToolbox` exposes a single `search_wikipedia` tool. Any OPM-compatible agent loop, such as
+[ovos-agentic-loop](https://github.com/TigreGotico/ovos-agentic-loop), can discover and call it.
 
 ### Loading via entry point (recommended)
 
@@ -112,6 +112,13 @@ for title, summary in output.results:
 
 ---
 
+## Related Projects
+
+- [OpenVoiceOS/ovos-plugin-manager](https://github.com/OpenVoiceOS/ovos-plugin-manager): the plugin manager that discovers OPM entry points
+- [TigreGotico/ovos-agentic-loop](https://github.com/TigreGotico/ovos-agentic-loop): agent loop that consumes toolbox plugins like this one
+
+---
+
 ## License
 
-Apache 2.0 — see [LICENSE](LICENSE).
+Apache 2.0. See [LICENSE](LICENSE).
