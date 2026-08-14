@@ -119,6 +119,51 @@ for title, summary in output.results:
 
 ---
 
+## Docker
+
+This repo publishes `ghcr.io/openvoiceos/ovos-wikipedia-plugin`, a standalone
+`ovos-persona-server` that serves one persona, `WikiBot`, backed by the
+`WikipediaRetrievalEngine` in this plugin. Wikipedia's public API needs no
+key, so the image works with no configuration at all.
+
+```bash
+docker run -p 8390:8337 ghcr.io/openvoiceos/ovos-wikipedia-plugin:dev
+```
+
+```bash
+curl http://localhost:8390/v1/models
+curl http://localhost:8390/v1/chat/completions \
+    -H "Content-Type: application/json" \
+    -d '{"model": "WikiBot", "messages": [{"role": "user", "content": "what is the capital of Portugal?"}]}'
+```
+
+Known issue as of `ovos-persona` 0.9.0a9 through 0.9.0a16 (the latest published
+alpha): `Persona.chat` passes `sess.lang` and `sess.system_unit` into
+`chat_completion` in the wrong order, so the retrieval engine receives the
+unit string (`"metric"`) where it expects a language code, and the request
+above answers `500 Internal Server Error` with `Persona chat failed:
+'NoneType' object has no attribute 'split'`. This is a bug in `ovos-persona`
+itself, not in this plugin or this image -- calling
+`WikipediaRetrievalEngine().query(...)` directly returns a correct answer.
+It will clear up once a fixed `ovos-persona` is published; there is nothing
+to configure around it from this image.
+
+A compose snippet:
+
+```yaml
+services:
+  ovos-wikipedia-persona:
+    image: ghcr.io/openvoiceos/ovos-wikipedia-plugin:dev
+    ports:
+      - "8390:8337"
+    restart: unless-stopped
+```
+
+The image builds on every pull request touching `Dockerfile`,
+`.dockerignore`, `pyproject.toml`, or the docker workflow itself (build only,
+no push), and publishes on pushes to `master` (`latest`), `dev` (`dev`), and
+version tags. See the [`docker` workflow](.github/workflows/docker.yml).
+
 ## License
 
 Apache 2.0. See [LICENSE](LICENSE).
