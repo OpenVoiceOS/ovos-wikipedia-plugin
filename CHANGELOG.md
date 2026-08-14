@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.0a1](https://github.com/OpenVoiceOS/ovos-wikipedia-plugin/tree/1.1.0a1) (2026-08-14)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-wikipedia-plugin/compare/1.0.1a2...1.1.0a1)
+
+**Merged pull requests:**
+
+- feat: publish a docker image for a ready-to-run WikiBot persona [\#38](https://github.com/OpenVoiceOS/ovos-wikipedia-plugin/pull/38) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [1.0.1a2](https://github.com/OpenVoiceOS/ovos-wikipedia-plugin/tree/1.0.1a2) (2026-08-01)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-wikipedia-plugin/compare/1.0.1a1...1.0.1a2)
