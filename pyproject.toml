@@ -34,7 +34,7 @@ test = [
 ovos-wikipedia-plugin = "ovos_wikipedia:WikipediaRetrievalEngine"
 
 [project.entry-points."opm.agents.toolbox"]
-ovos-wikipedia-tool = "ovos_wikipedia:WikipediaToolbox"
+ovos-wikipedia-tools = "ovos_wikipedia:WikipediaToolbox"
 
 [tool.pytest.ini_options]
 timeout = 600

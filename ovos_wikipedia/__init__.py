@@ -332,15 +332,16 @@ class SearchWikipediaOutput(ToolOutput):
 class WikipediaToolbox(ToolBox):
     toolbox_id = "ovos-wikipedia-tools"
 
-    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
+    def __init__(self, config: Optional[Dict[str, Any]] = None, bus: Optional[Any] = None) -> None:
         """
         Initialise the toolbox.
 
         Args:
-            config: Plugin configuration dict (currently unused).
+            config: Plugin configuration dict.
+            bus: The OVOS Messagebus client instance, passed through to ToolBox.
         """
         self.wiki = WikipediaRetrievalEngine(config)
-        super().__init__(toolbox_id=self.toolbox_id)
+        super().__init__(toolbox_id=self.toolbox_id, config=config, bus=bus)
 
     def search_wikipedia(self, args: SearchWikipediaArgs) -> SearchWikipediaOutput:
         """

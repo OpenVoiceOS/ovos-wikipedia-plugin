@@ -22,7 +22,7 @@ pip install ovos-wikipedia-plugin
 | Entry point                                      | Class                      | Use case                                                 |
 |--------------------------------------------------|----------------------------|----------------------------------------------------------|
 | `opm.agents.retrieval` (`ovos-wikipedia-plugin`) | `WikipediaRetrievalEngine` | Retrieval. Returns ranked `(passage, score)` tuples       |
-| `opm.agents.toolbox` (`ovos-wikipedia-tool`)     | `WikipediaToolbox`         | Agent tool use. Exposes `search_wikipedia`                |
+| `opm.agents.toolbox` (`ovos-wikipedia-tools`)     | `WikipediaToolbox`         | Agent tool use. Exposes `search_wikipedia`                |
 
 ---
 
@@ -86,7 +86,7 @@ Any agent loop that supports `opm.agents.toolbox` entry points will auto-discove
       "api_url": "http://localhost:11434/v1/chat/completions"
     },
     "toolboxes": [
-      "ovos-wikipedia-tool"
+      "ovos-wikipedia-tools"
     ]
   }
 }
