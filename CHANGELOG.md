@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.1a1](https://github.com/OpenVoiceOS/ovos-wikipedia-plugin/tree/1.1.1a1) (2026-08-14)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-wikipedia-plugin/compare/1.1.0a1...1.1.1a1)
+
+**Merged pull requests:**
+
+- fix: WikipediaToolbox constructor rejects the OPM ToolBox loader call [\#41](https://github.com/OpenVoiceOS/ovos-wikipedia-plugin/pull/41) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [1.1.0a1](https://github.com/OpenVoiceOS/ovos-wikipedia-plugin/tree/1.1.0a1) (2026-08-14)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-wikipedia-plugin/compare/1.0.1a2...1.1.0a1)
