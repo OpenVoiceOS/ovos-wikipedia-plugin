@@ -12,10 +12,11 @@
 import concurrent.futures
 import dataclasses
 from functools import lru_cache
-from typing import Optional, Tuple, Dict, Any, List, Type
+from typing import Optional, Tuple, Dict, Any, List, Type, Union
 from urllib.parse import urlencode
 
 import requests
+from ovos_bus_client import MessageBusClient
 from ovos_plugin_manager.agents import (
     load_extractive_qa_plugin,
     load_reranker_plugin,
@@ -25,6 +26,7 @@ from ovos_plugin_manager.templates.agent_tools import AgentTool, ToolBox, ToolOu
 from ovos_plugin_manager.templates.agents import ExtractiveQAEngine, ReRankerEngine
 from ovos_plugin_manager.templates.agents import RetrievalEngine
 from ovos_plugin_manager.templates.keywords import KeywordExtractor
+from ovos_utils.fakebus import FakeBus
 from ovos_utils.log import LOG
 from ovos_utils.parse import fuzzy_match, MatchStrategy
 from ovos_utils.text_utils import rm_parentheses
@@ -332,7 +334,9 @@ class SearchWikipediaOutput(ToolOutput):
 class WikipediaToolbox(ToolBox):
     toolbox_id = "ovos-wikipedia-tools"
 
-    def __init__(self, config: Optional[Dict[str, Any]] = None, bus: Optional[Any] = None) -> None:
+    def __init__(self,
+                 config: Optional[Dict[str, Any]] = None,
+                 bus: Optional[Union[MessageBusClient, FakeBus]] = None) -> None:
         """
         Initialise the toolbox.
 

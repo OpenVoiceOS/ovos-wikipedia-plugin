@@ -14,7 +14,7 @@ classifiers = [
 ]
 dependencies = [
     "ovos-utils>=0.7.0,<1.0.0",
-    "ovos-plugin-manager>=2.6.1a1,<3.0.0",
+    "ovos-plugin-manager>=2.11.1a1,<3.0.0",
     "ovos-bus-client>=1.0.1",
     "rapidfuzz",
     "pydantic",
