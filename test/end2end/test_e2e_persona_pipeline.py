@@ -167,10 +167,16 @@ class TestWikipediaPersonaPipelineSpeak:
         messages = _drive_utterance(mc, sess, "what is wikipedia", timeout=30)
 
         msg_types = [m.msg_type for m in messages]
-        speak_msgs = [m for m in messages if m.msg_type == SPEC_SPEAK]
+        # OVOS-INTENT bus-namespace migration: the spec name is
+        # ``ovos.utterance.speak``; the legacy ``speak`` topic may or may not
+        # be dual-sent depending on stack version, so accept either without
+        # counting occurrences.
+        speak_msgs = [
+            m for m in messages if m.msg_type in ("speak", "ovos.utterance.speak")
+        ]
 
         assert speak_msgs, (
-            f"Expected at least one 'speak' message; got msg_types: {msg_types}"
+            f"Expected at least one speak message; got msg_types: {msg_types}"
         )
 
     def test_speak_message_has_non_empty_utterance(self, mc):
@@ -180,7 +186,9 @@ class TestWikipediaPersonaPipelineSpeak:
 
         messages = _drive_utterance(mc, sess, "tell me about encyclopedias", timeout=30)
 
-        speak_msgs = [m for m in messages if m.msg_type == SPEC_SPEAK]
+        speak_msgs = [
+            m for m in messages if m.msg_type in ("speak", "ovos.utterance.speak")
+        ]
         assert speak_msgs, (
             f"No speak message found. Message types: {[m.msg_type for m in messages]}"
         )

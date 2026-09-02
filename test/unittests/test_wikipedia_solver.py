@@ -418,14 +418,18 @@ class TestQuery(unittest.TestCase):
 
 class TestWikipediaToolbox(unittest.TestCase):
 
+    def test_toolbox_id_is_correct(self):
+        tb = WikipediaToolbox(config={}, bus=None)
+        self.assertEqual(tb.toolbox_id, "ovos-wikipedia-tools")
+
     def test_discover_tools_returns_search_tool(self):
-        tb = WikipediaToolbox()
+        tb = WikipediaToolbox(config={}, bus=None)
         tools = tb.discover_tools()
         self.assertEqual(len(tools), 1)
         self.assertEqual(tools[0].name, "search_wikipedia")
 
     def test_search_wikipedia_returns_title_summary_pairs(self):
-        tb = WikipediaToolbox()
+        tb = WikipediaToolbox(config={}, bus=None)
         fake_pages = [
             _fake_result(title="Python", summary="A programming language."),
         ]
@@ -435,7 +439,7 @@ class TestWikipediaToolbox(unittest.TestCase):
         self.assertEqual(output.results, [("Python", "A programming language.")])
 
     def test_search_wikipedia_empty_results(self):
-        tb = WikipediaToolbox()
+        tb = WikipediaToolbox(config={}, bus=None)
         with patch.object(tb.wiki, "search", return_value=[]):
             from ovos_wikipedia import SearchWikipediaArgs
             output = tb.search_wikipedia(SearchWikipediaArgs(query="xyzzy", lang="en"))
