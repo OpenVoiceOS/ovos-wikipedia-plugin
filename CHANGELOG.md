@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.2a1](https://github.com/OpenVoiceOS/ovos-wikipedia-plugin/tree/1.1.2a1) (2026-09-02)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-wikipedia-plugin/compare/1.1.1a1...1.1.2a1)
+
+**Merged pull requests:**
+
+- fix: adopt config/bus ToolBox constructor contract [\#33](https://github.com/OpenVoiceOS/ovos-wikipedia-plugin/pull/33) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [1.1.1a1](https://github.com/OpenVoiceOS/ovos-wikipedia-plugin/tree/1.1.1a1) (2026-08-14)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-wikipedia-plugin/compare/1.1.0a1...1.1.1a1)
