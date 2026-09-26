@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.2a2](https://github.com/OpenVoiceOS/ovos-wikipedia-plugin/tree/1.1.2a2) (2026-09-26)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-wikipedia-plugin/compare/1.1.2a1...1.1.2a2)
+
+**Merged pull requests:**
+
+- Update python Docker tag to v3.14 [\#39](https://github.com/OpenVoiceOS/ovos-wikipedia-plugin/pull/39) ([renovate[bot]](https://github.com/apps/renovate))
+
 ## [1.1.2a1](https://github.com/OpenVoiceOS/ovos-wikipedia-plugin/tree/1.1.2a1) (2026-09-02)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-wikipedia-plugin/compare/1.1.1a1...1.1.2a1)
