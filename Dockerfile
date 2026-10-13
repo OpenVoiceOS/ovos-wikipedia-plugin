@@ -2,7 +2,7 @@
 # engine (opm.agents.retrieval, WikipediaRetrievalEngine). No API key or
 # other external credential is needed -- the plugin talks to the public
 # Wikipedia API directly.
-FROM python:3.14-slim
+FROM python:3.15-slim
 
 RUN apt-get update && apt-get install -y --no-install-recommends curl \
     && rm -rf /var/lib/apt/lists/*
