@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.2a3](https://github.com/OpenVoiceOS/ovos-wikipedia-plugin/tree/1.1.2a3) (2026-10-15)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-wikipedia-plugin/compare/1.1.2a2...1.1.2a3)
+
+**Merged pull requests:**
+
+- feat: short\_summary from the Wikimedia page-summary REST API [\#46](https://github.com/OpenVoiceOS/ovos-wikipedia-plugin/pull/46) ([mikejgray](https://github.com/mikejgray))
+
 ## [1.1.2a2](https://github.com/OpenVoiceOS/ovos-wikipedia-plugin/tree/1.1.2a2) (2026-09-26)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-wikipedia-plugin/compare/1.1.2a1...1.1.2a2)
