@@ -5,6 +5,7 @@ Uses mocked HTTP calls (no network required) unless marked as integration tests.
 """
 import unittest
 from unittest.mock import patch, MagicMock
+from urllib.parse import quote
 
 from ovos_wikipedia import WikipediaRetrievalEngine, WikipediaResult, WikipediaToolbox
 
@@ -227,6 +228,39 @@ class TestGetPageData(unittest.TestCase):
 
 
 # ---------------------------------------------------------------------------
+# _get_short_summary (mocked HTTP)
+# ---------------------------------------------------------------------------
+
+class TestGetShortSummary(unittest.TestCase):
+
+    @patch("ovos_wikipedia.requests.get")
+    def test_returns_extract_for_standard_page(self, mock_get):
+        mock_get.return_value.json.return_value = {"type": "standard", "extract": " Short lead. "}
+        self.assertEqual(WikipediaRetrievalEngine._get_short_summary("Eiffel Tower", "en"), "Short lead.")
+
+    @patch("ovos_wikipedia.requests.get")
+    def test_title_is_url_encoded_for_rest_path(self, mock_get):
+        mock_get.return_value.json.return_value = {"type": "standard", "extract": "x"}
+        WikipediaRetrievalEngine._get_short_summary("AC/DC", "pt")
+        self.assertEqual(mock_get.call_args[0][0],
+                         "https://pt.wikipedia.org/api/rest_v1/page/summary/AC%2FDC")
+
+    @patch("ovos_wikipedia.requests.get")
+    def test_disambiguation_page_returns_none(self, mock_get):
+        mock_get.return_value.json.return_value = {"type": "disambiguation", "extract": "Mercury may refer to"}
+        self.assertIsNone(WikipediaRetrievalEngine._get_short_summary("Mercury", "en"))
+
+    @patch("ovos_wikipedia.requests.get")
+    def test_empty_extract_returns_none(self, mock_get):
+        mock_get.return_value.json.return_value = {"type": "standard", "extract": ""}
+        self.assertIsNone(WikipediaRetrievalEngine._get_short_summary("Empty", "en"))
+
+    @patch("ovos_wikipedia.requests.get", side_effect=Exception("network error"))
+    def test_network_error_returns_none(self, mock_get):
+        self.assertIsNone(WikipediaRetrievalEngine._get_short_summary("Eiffel Tower", "en"))
+
+
+# ---------------------------------------------------------------------------
 # search (mocked HTTP)
 # ---------------------------------------------------------------------------
 
@@ -253,10 +287,13 @@ class TestSearch(unittest.TestCase):
         self.s = _make_engine()
 
 
-    def _patch_requests(self, search_data, page_data_map):
+    def _patch_requests(self, search_data, page_data_map, rest_summaries=None):
         def side_effect(url, **kwargs):
             mock_resp = MagicMock()
-            if "list=search" in url:
+            if "/rest_v1/page/summary/" in url:
+                title = url.rsplit("/", 1)[-1]
+                mock_resp.json.return_value = (rest_summaries or {}).get(title, {"type": "no-extract"})
+            elif "list=search" in url:
                 mock_resp.json.return_value = search_data
             else:
                 for pid, data in page_data_map.items():
@@ -347,6 +384,20 @@ class TestSearch(unittest.TestCase):
         mock_kw.extract.assert_called_once()
 
     @patch("ovos_wikipedia.requests.get")
+    def test_short_summary_set_on_top_result_only(self, mock_get):
+        extracts = {"Python (programming language)": "Python is short.", "Python (snake)": "Snake is short."}
+        rest = {quote(t.replace(" ", "_"), safe=""): {"type": "standard", "extract": e}
+                for t, e in extracts.items()}
+        mock_get.side_effect = self._patch_requests(
+            _SEARCH_RESULTS, {"1001": _PAGE_DATA_1001, "1002": _PAGE_DATA_1002}, rest
+        )
+        results = self.s.search("python", "en", top_k=2)
+        self.assertEqual(results[0].short_summary, extracts[results[0].title])
+        self.assertIsNone(results[1].short_summary)
+        rest_calls = [c for c in mock_get.call_args_list if "/rest_v1/" in c[0][0]]
+        self.assertEqual(len(rest_calls), 1)
+
+    @patch("ovos_wikipedia.requests.get")
     def test_lang_code_stripped_to_two_chars(self, mock_get):
         mock_get.return_value.json.return_value = {"query": {"search": []}}
         self.s.search("python", "en-US")
@@ -382,6 +433,13 @@ class TestQuery(unittest.TestCase):
         with patch.object(self.s, "search", return_value=[page]):
             results = self.s.query("q", "en")
         self.assertEqual(results[0][0], "Extracted passage.")
+
+    def test_short_summary_preferred_over_summary(self):
+        page = _fake_result(summary="Full summary text.")
+        page.short_summary = "Short lead."
+        with patch.object(self.s, "search", return_value=[page]):
+            results = self.s.query("q", "en")
+        self.assertEqual(results[0][0], "Short lead.")
 
     def test_summary_used_when_no_best_passage(self):
         page = _fake_result(summary="Full summary text.")

@@ -13,7 +13,7 @@ import concurrent.futures
 import dataclasses
 from functools import lru_cache
 from typing import Optional, Tuple, Dict, Any, List, Type, Union
-from urllib.parse import urlencode
+from urllib.parse import quote, urlencode
 
 import requests
 from ovos_bus_client import MessageBusClient
@@ -33,6 +33,8 @@ from ovos_utils.text_utils import rm_parentheses
 from ovos_wikipedia.version import VERSION_BUILD, VERSION_MAJOR, VERSION_MINOR
 from pydantic import Field
 
+SHORT_SUMMARY_URL = "https://{lang}.wikipedia.org/api/rest_v1/page/summary/{title}"
+
 
 @dataclasses.dataclass
 class WikipediaResult:
@@ -48,6 +50,8 @@ class WikipediaResult:
         conf: Confidence score of the result (0.0 to 1.0).
         query: The original search query that produced this result.
         best_passage: The specific snippet extracted by a QA engine, if available.
+        short_summary: Wikimedia's page-preview extract (the cleaned lead
+            paragraph), set on the top search result only.
     """
     page_id: str
     lang: str
@@ -57,6 +61,7 @@ class WikipediaResult:
     conf: float = 0.5
     query: Optional[str] = None
     best_passage: Optional[str] = None
+    short_summary: Optional[str] = None
 
 
 class WikipediaRetrievalEngine(RetrievalEngine):
@@ -97,7 +102,7 @@ class WikipediaRetrievalEngine(RetrievalEngine):
         Returns:
             List of tuples containing (content, score) for the top k matches.
         """
-        return [(page.best_passage or page.summary, page.conf)
+        return [(page.best_passage or page.short_summary or page.summary, page.conf)
                 for page in self.search(query, lang, k)]
 
     ###########################
@@ -224,7 +229,37 @@ class WikipediaRetrievalEngine(RetrievalEngine):
                     lang=lang
                 ).strip()
 
-        return self._rerank_pages(query, res, lang)
+        ranked = self._rerank_pages(query, res, lang)
+        if ranked:
+            ranked[0].short_summary = self._get_short_summary(ranked[0].title, lang)
+        return ranked
+
+    @classmethod
+    def _get_short_summary(cls, title: str, lang: str) -> Optional[str]:
+        """
+        Fetch the page-preview extract from the Wikimedia REST API.
+
+        This is the lead paragraph that Wikipedia itself uses for hover
+        previews, already stripped of pronunciation guides and parentheticals,
+        so it is a sensible spoken answer without any summarization step.
+
+        Args:
+            title: Title of the Wikipedia article.
+            lang: Language code (e.g., "en", "pt").
+
+        Returns:
+            The extract text, or None for non-standard pages (disambiguation,
+            no extract) or on error.
+        """
+        url = SHORT_SUMMARY_URL.format(lang=lang, title=quote(title.replace(" ", "_"), safe=""))
+        try:
+            page: Dict[str, Any] = requests.get(url, timeout=5, headers={"User-Agent": cls.USER_AGENT}).json()
+        except Exception as e:
+            LOG.error(f"Error fetching short summary for '{title}': {e}")
+            return None
+        if page.get("type") != "standard":
+            return None
+        return (page.get("extract") or "").strip() or None
 
     @classmethod
     def _get_page_data(cls, pid: str, lang: str, query: Optional[str] = None, idx: int = 0) -> Optional[
