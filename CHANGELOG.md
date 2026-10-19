@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.2a4](https://github.com/OpenVoiceOS/ovos-wikipedia-plugin/tree/1.1.2a4) (2026-10-19)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-wikipedia-plugin/compare/1.1.2a3...1.1.2a4)
+
+**Merged pull requests:**
+
+- test: assert the toolbox bus contract by its answers [\#48](https://github.com/OpenVoiceOS/ovos-wikipedia-plugin/pull/48) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [1.1.2a3](https://github.com/OpenVoiceOS/ovos-wikipedia-plugin/tree/1.1.2a3) (2026-10-15)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-wikipedia-plugin/compare/1.1.2a2...1.1.2a3)
