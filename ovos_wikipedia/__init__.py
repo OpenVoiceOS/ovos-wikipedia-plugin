@@ -181,6 +181,9 @@ class WikipediaRetrievalEngine(RetrievalEngine):
             "list": "search",
             "srsearch": query,
             "format": "json",
+            # anonymous CORS: lets the API be read from a web page too
+            # (OVOS in a browser); servers and desktops ignore it
+            "origin": "*",
         })
         search_url = f"https://{lang}.wikipedia.org/w/api.php?{search_params}"
         try:
@@ -277,7 +280,7 @@ class WikipediaRetrievalEngine(RetrievalEngine):
             A WikipediaResult object if successful, else None.
         """
         url = (
-            f"https://{lang}.wikipedia.org/w/api.php?format=json&action=query&"
+            f"https://{lang}.wikipedia.org/w/api.php?format=json&action=query&origin=*&"
             f"prop=extracts|pageimages&exintro&explaintext&redirects=1&pageids={pid}"
         )
         try:
