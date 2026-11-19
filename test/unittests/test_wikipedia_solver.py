@@ -119,6 +119,26 @@ class TestScorePage(unittest.TestCase):
         score_later = WikipediaRetrievalEngine._score_page("python", "Python", "Python language.", 3)
         self.assertGreater(score_first, score_later)
 
+    def test_case_does_not_matter(self):
+        """Queries come from STT in lower case; titles are capitalized."""
+        WikipediaRetrievalEngine._score_page.cache_clear()
+        lower = WikipediaRetrievalEngine._score_page("who is isaac newton", "Isaac Newton",
+                                                     "Sir Isaac Newton was an English polymath.", 0)
+        same = WikipediaRetrievalEngine._score_page("who is Isaac Newton", "Isaac Newton",
+                                                    "Sir Isaac Newton was an English polymath.", 0)
+        self.assertAlmostEqual(lower, same)
+
+    def test_matching_page_passes_common_query_threshold(self):
+        """A question whose words name the page scores above the 0.5 a
+        common query answer needs (ovos-workshop drops answers below it)."""
+        WikipediaRetrievalEngine._score_page.cache_clear()
+        en = WikipediaRetrievalEngine._score_page("tell me about the eiffel tower", "Eiffel Tower",
+                                                  "The Eiffel Tower is a wrought-iron lattice tower in Paris.", 0)
+        da = WikipediaRetrievalEngine._score_page("hvor er eiffeltårnet", "Eiffeltårnet",
+                                                  "Eiffeltårnet er et observationstårn og Paris' vartegn.", 0)
+        self.assertGreater(en, 0.5)
+        self.assertGreater(da, 0.5)
+
     def test_empty_query_does_not_crash(self):
         WikipediaRetrievalEngine._score_page.cache_clear()
         score = WikipediaRetrievalEngine._score_page("", "Python", "Python is a programming language.", 0)

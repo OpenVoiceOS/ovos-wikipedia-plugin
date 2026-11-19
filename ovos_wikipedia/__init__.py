@@ -331,8 +331,13 @@ class WikipediaRetrievalEngine(RetrievalEngine):
             Relevance score where higher values indicate greater relevance.
         """
         page_mod = 1 - (idx * 0.05)  # Favor original order returned by Wikipedia
-        title_score = fuzzy_match(query, rm_parentheses(title), MatchStrategy.TOKEN_SET_RATIO)
-        summary_score = fuzzy_match(summary, query, MatchStrategy.TOKEN_SET_RATIO)
+        # case-insensitive: queries come from STT in lower case, while titles
+        # and summaries are capitalized ("eiffeltårnet" vs "Eiffeltårnet");
+        # compared as-is, a perfect title match scored ~0.15 and the skill's
+        # answer fell below the 0.5 a common query answer must reach
+        query = query.casefold()
+        title_score = fuzzy_match(query, rm_parentheses(title).casefold(), MatchStrategy.TOKEN_SET_RATIO)
+        summary_score = fuzzy_match(summary.casefold(), query, MatchStrategy.TOKEN_SET_RATIO)
         return title_score * summary_score * page_mod
 
     def _rerank_pages(self, query: str, results: List[WikipediaResult], lang: str) -> List[WikipediaResult]:
